@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>位置確認完了 - 石碑 - Tokyo Mystery Challenge</title>
+  <style>
+    :root {
+      --ink-black: #0B0F14;
+      --charcoal: #12161C;
+      --parchment: #F4F1EC;
+      --amber: #FFC773;
+      --cyan: #39C6F4;
+      --success-green: #22C55E;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --muted-text: rgba(244, 241, 236, 0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--ink-black);
+      background-image: 
+        radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(57, 198, 244, 0.06) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      padding: 1rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--parchment);
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      margin: 2rem auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.2),
+        0 0 80px rgba(34, 197, 94, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      position: relative;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .verified-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--success-green), #16A34A);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    }
+
+    h1 {
+      font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--success-green), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      color: var(--amber);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .note-box {
+      background: rgba(255, 199, 115, 0.05);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .note-text {
+      color: var(--parchment);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .instructions {
+      background: rgba(57, 198, 244, 0.05);
+      border: 1px solid rgba(57, 198, 244, 0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .instructions ol {
+      padding-left: 1.5rem;
+      color: var(--parchment);
+      line-height: 1.8;
+    }
+
+    .instructions li {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .stone-image {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem auto;
+      display: block;
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .final-riddle-btn {
+      display: block;
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, var(--amber), #E59819);
+      border: none;
+      border-radius: 8px;
+      color: var(--ink-black);
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .final-riddle-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .final-riddle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 199, 115, 0.3);
+    }
+
+    .final-riddle-btn:hover::before {
+      left: 100%;
+    }
+
+    /* Final Riddle Section Styles */
+    .final-riddle-section {
+      margin-top: 1.5rem;
+      animation: slideDown 0.4s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        max-height: 500px;
+        transform: translateY(0);
+      }
+    }
+
+    .riddle-container {
+      background: rgba(255, 199, 115, 0.05);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+
+    .riddle-prompt {
+      color: var(--parchment);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .riddle-sentence {
+      font-size: 1.4rem;
+      font-weight: 500;
+      text-align: center;
+      margin: 2rem 0;
+      color: var(--parchment);
+    }
+
+    .riddle-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 199, 115, 0.3);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      color: var(--parchment);
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 150px;
+      margin-left: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .riddle-input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(255, 199, 115, 0.2);
+    }
+
+    .riddle-input.correct {
+      border-color: var(--success-green);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .riddle-input.incorrect {
+      border-color: #EF4444;
+      background: rgba(239, 68, 68, 0.1);
+      animation: shake 0.5s ease-in-out;
+    }
+
+    .submit-riddle-btn {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, var(--cyan), #20B4E8);
+      border: none;
+      border-radius: 6px;
+      color: var(--ink-black);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .submit-riddle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(57, 198, 244, 0.3);
+    }
+
+    .submit-riddle-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .riddle-result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .riddle-result.success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--success-green);
+    }
+
+    .riddle-result.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #EF4444;
+    }
+
+
+    .hints-section {
+      margin-top: 2rem;
+    }
+
+    .hints-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hints-toggle:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hints-toggle-text {
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .hints-arrow {
+      color: var(--cyan);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .hints-arrow.expanded {
+      transform: rotate(180deg);
+    }
+
+    .hints-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .hints-content.expanded {
+      max-height: 500px;
+    }
+
+    .hint-item {
+      background: rgba(57, 198, 244, 0.05);
+      border: 1px solid rgba(57, 198, 244, 0.2);
+      border-radius: 6px;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .hint-item:hover {
+      background: rgba(57, 198, 244, 0.08);
+    }
+
+    .hint-title {
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hint-content {
+      color: var(--parchment);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .hint-content.revealed {
+      max-height: 200px;
+      margin-top: 0.5rem;
+    }
+
+    .accessibility-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .small-print {
+      font-size: 0.85rem;
+      color: var(--muted-text);
+      line-height: 1.5;
+    }
+
+    .small-print ul {
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .small-print li {
+      margin-bottom: 0.3rem;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .final-riddle-btn {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="verified-badge">フィールドノード確認済み</div>
+
+      <h1>フィールドノード確認済み — 石碑</h1>
+
+      <div class="section">
+        <div class="section-title">O.W.L.からのメモ</div>
+        <div class="note-box">
+          <p class="note-text">
+            最後のフィールドノードに到達しました。<br><br>
+            これは駅でも塔でもなく、石に刻まれた記憶です。<br><br>
+            敬意を持って立ってください：声を低く、道を空けて。<br><br>
+            組織はここに紙を残しませんでした—あなたが発見すべきアイデアだけです。
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">やるべきこと</div>
+        <div class="instructions">
+          <ol>
+            <li>記念碑の前に立ってください。</li>
+            <li>刻まれているものだけを読んでください—探さず、推測しないでください。</li>
+            <li>下の「最後の謎を始める」をタップしてください。</li>
+            <li>フレーズの欠けている単語を埋めてください：<br><strong style="color: var(--amber); margin-left: 1rem;">Pray for Eternal ________（永遠の________を祈る）</strong></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">インターフェース</div>
+        <div class="note-box" style="background: rgba(57, 198, 244, 0.05); border-color: rgba(57, 198, 244, 0.2);">
+          <p class="note-text">
+            ボタン: 🪨 巣鴨記念碑<br>
+            🔍 最後の謎を始める<br><br>
+            オプションのヒント切り替え: ▼ ヒントが必要ですか？
+          </p>
+        </div>
+      </div>
+
+      <button class="final-riddle-btn" onclick="showFinalRiddle()">
+        🪨 巣鴨記念碑 🔍 最後の謎を始める
+      </button>
+
+      <!-- 最後の謎セクション（最初は非表示） -->
+      <div class="final-riddle-section" id="finalRiddleSection" style="display: none;">
+        <div class="riddle-container">
+          <div class="section-title">最後の謎</div>
+          <p class="riddle-prompt">
+            願いを完成させる英単語1つで空白を埋めてください：
+          </p>
+          <div class="riddle-sentence">
+            Pray for Eternal <input type="text" id="riddleAnswer" class="riddle-input" placeholder="単語を入力..." maxlength="20">
+          </div>
+          <button class="submit-riddle-btn" onclick="checkFinalAnswer()">
+            送信
+          </button>
+
+          <div id="riddleResult" class="riddle-result" style="display: none;"></div>
+
+        </div>
+      </div>
+
+      <div class="hints-section">
+        <div class="hints-toggle" onclick="toggleHints()">
+          <span class="hints-toggle-text">ヒントが必要ですか？</span>
+          <span class="hints-arrow" id="hintsArrow">▼</span>
+        </div>
+
+        <div class="hints-content" id="hintsContent">
+          <div class="hint-item" onclick="revealHint(1)">
+            <div class="hint-title">
+              <span>ヒント 1（優しいヒント）</span>
+              <span>👆</span>
+            </div>
+            <div class="hint-content" id="hint1">
+              碑文の核心となる願いを読んでください。1つのシンプルな英単語が「Pray for Eternal ________」というフレーズを完成させます。
+            </div>
+          </div>
+
+          <div class="hint-item" onclick="revealHint(2)">
+            <div class="hint-title">
+              <span>ヒント 2（焦点を絞る）</span>
+              <span>👆</span>
+            </div>
+            <div class="hint-content" id="hint2">
+              多くの記念碑に刻まれる普遍的な願いを考えてください—戦争の反対です。5文字の英単語1つで十分です。
+            </div>
+          </div>
+
+          <div class="hint-item" onclick="revealHint(3)">
+            <div class="hint-title">
+              <span>ヒント 3（もう少し）</span>
+              <span>👆</span>
+            </div>
+            <div class="hint-content" id="hint3">
+              この単語はよく鳩やオリーブの枝と一緒に現れます。Pで始まりEで終わります。
+            </div>
+          </div>
+
+          <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.02); border-radius: 6px;">
+            <p class="small-print" style="color: var(--muted-text);">
+              <em>(それでも分からない場合は、ガイドに日本語テキストの発音/意味だけを聞いてください—直接の答えは聞かないでください。)</em>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accessibility-section">
+        <div class="section-title">アクセシビリティとエチケット</div>
+        <div class="small-print">
+          <ul>
+            <li>碑文は願いについてであり、名前や日付についてではありません。</li>
+            <li>礼儀正しく列に並んでください；短時間の写真撮影は可能ですが、他の人にスペースを譲ってください。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleHints() {
+      const content = document.getElementById('hintsContent');
+      const arrow = document.getElementById('hintsArrow');
+      
+      if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        arrow.classList.remove('expanded');
+      } else {
+        content.classList.add('expanded');
+        arrow.classList.add('expanded');
+      }
+    }
+
+    let revealedHints = 0;
+
+    function revealHint(hintNumber) {
+      if (hintNumber <= revealedHints + 1) {
+        const hintContent = document.getElementById('hint' + hintNumber);
+        
+        if (!hintContent.classList.contains('revealed')) {
+          hintContent.classList.add('revealed');
+          revealedHints = Math.max(revealedHints, hintNumber);
+        }
+      }
+    }
+
+    // Progressive hint reveal - can only reveal hints in order
+    document.addEventListener('DOMContentLoaded', function() {
+      // Allow revealing hint 1 immediately
+      revealedHints = 0;
+      
+      // Add Enter key support for final riddle
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && document.getElementById('finalRiddleSection').style.display !== 'none') {
+          event.preventDefault();
+          checkFinalAnswer();
+        }
+      });
+    });
+
+    // Show Final Riddle Section
+    function showFinalRiddle() {
+      const section = document.getElementById('finalRiddleSection');
+      const button = document.querySelector('.final-riddle-btn');
+      
+      if (section.style.display === 'none') {
+        section.style.display = 'block';
+        button.innerHTML = '⬆️ 最後の謎を隠す';
+        button.onclick = hideFinalRiddle;
+        
+        // Focus on input after animation
+        setTimeout(() => {
+          document.getElementById('riddleAnswer').focus();
+        }, 200);
+      }
+    }
+
+    // Hide Final Riddle Section
+    function hideFinalRiddle() {
+      const section = document.getElementById('finalRiddleSection');
+      const button = document.querySelector('.final-riddle-btn');
+
+      section.style.display = 'none';
+      button.innerHTML = '🪨 巣鴨記念碑 🔍 最後の謎を始める';
+      button.onclick = showFinalRiddle;
+
+      // Clear any previous results
+      document.getElementById('riddleResult').style.display = 'none';
+      document.getElementById('riddleAnswer').value = '';
+      document.getElementById('riddleAnswer').classList.remove('correct', 'incorrect');
+    }
+
+
+    // Check Final Answer
+    function checkFinalAnswer() {
+      const input = document.getElementById('riddleAnswer');
+      const result = document.getElementById('riddleResult');
+      const answer = input.value.trim().toLowerCase();
+      
+      // Clear previous states
+      input.classList.remove('correct', 'incorrect');
+      result.style.display = 'none';
+      
+      // Validate answer (accept "peace" and optionally "heiwa")
+      if (answer === 'peace' || answer === 'heiwa') {
+        // Correct answer
+        input.classList.add('correct');
+        result.innerHTML = '✅ 正解！永遠の平和への願いが完成しました。<br><small>エピローグにリダイレクトしています...</small>';
+        result.className = 'riddle-result success';
+        result.style.display = 'block';
+
+        // Disable input and button
+        input.disabled = true;
+        document.querySelector('.submit-riddle-btn').disabled = true;
+
+        // Redirect to success/epilogue page after 3 seconds
+        setTimeout(function() {
+          window.location.href = 'd1f3k7e9.html';
+        }, 3000);
+
+      } else {
+        // Incorrect answer
+        input.classList.add('incorrect');
+        result.innerHTML = '認識されませんでした。願いの言葉をもう一度読んでください。シンプルな英単語1つです。';
+        result.className = 'riddle-result error';
+        result.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

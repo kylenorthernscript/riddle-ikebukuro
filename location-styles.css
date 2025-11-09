@@ -1,0 +1,542 @@
+/* ===================================
+   Riddle Ikebukuro Design System
+   コンセプト: 「池袋の夜に潜む、知的な影」
+   =================================== */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+/* ===================================
+   カラーパレット: アーバン・ミステリー・ナイト
+   =================================== */
+:root {
+  /* プライマリ（夜と影） */
+  --midnight-blue: #1C1E3A;
+  --shadow-purple: #4A3F6B;
+
+  /* アクセント（ネオンとヒント） */
+  --owl-gold: #FFD966;
+  --signal-red: #E54B4B;
+
+  /* ベース（可読性） */
+  --fog-white: #EAEAEA;
+  --dark-grey: #333333;
+
+  /* 追加の色 */
+  --success-green: #22C55E;
+  --warning-orange: #F59E0B;
+
+  /* 透明度のバリエーション */
+  --shadow-purple-light: rgba(74, 63, 107, 0.6);
+  --owl-gold-glow: rgba(255, 217, 102, 0.3);
+}
+
+/* ===================================
+   リセット & ベース
+   =================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* 背景: ミッドナイト・ブルー + 池袋の夜のネオン演出 */
+  background: var(--midnight-blue);
+  background-image:
+    /* ネオンの光の反射 */
+    radial-gradient(circle at 20% 30%, rgba(255, 217, 102, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(74, 63, 107, 0.15) 0%, transparent 50%),
+    /* 微細なノイズテクスチャ（夜の質感） */
+    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+
+  min-height: 100vh;
+  padding: 1rem;
+
+  /* タイポグラフィ: 本文はNoto Sans JP */
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  color: var(--fog-white);
+
+  line-height: 1.6;
+}
+
+/* ===================================
+   レイアウト: コンテナとカード
+   =================================== */
+.container {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  /* カード背景: シャドウ・パープル + ガラスモーフィズム効果 */
+  background: var(--shadow-purple);
+  background: linear-gradient(135deg,
+    rgba(74, 63, 107, 0.9) 0%,
+    rgba(74, 63, 107, 0.7) 100%);
+  backdrop-filter: blur(10px);
+
+  /* 秘密の指令書風のボーダー */
+  border: 1px solid rgba(255, 217, 102, 0.2);
+  border-radius: 16px;
+
+  padding: 2.5rem 2rem;
+
+  /* 影で深みを演出 */
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  text-align: center;
+  position: relative;
+}
+
+/* チャプターバッジ: Mr. Owlの章立て */
+.chapter-badge {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* オウル・ゴールドのグラデーション */
+  background: linear-gradient(135deg, #FFD966, #E5C658);
+  color: var(--midnight-blue);
+
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+
+  /* タイポグラフィ: 明朝体で知的な印象 */
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+
+  /* 暗闇で光るネオン効果 */
+  box-shadow:
+    0 4px 12px rgba(255, 217, 102, 0.4),
+    0 0 20px rgba(255, 217, 102, 0.2);
+}
+
+/* ロケーションアイコン: フクロウや池袋のシンボル */
+.location-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+
+  /* フクロウの目のように点滅 */
+  animation: owlBlink 3s ease-in-out infinite;
+}
+
+@keyframes owlBlink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0.3; }
+}
+
+/* ===================================
+   タイポグラフィ: 見出しと本文
+   =================================== */
+
+/* 見出し: Mr. Owlの言葉（明朝体） */
+h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--owl-gold);
+
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+
+  /* 金色の光沢 */
+  text-shadow: 0 0 20px rgba(255, 217, 102, 0.3);
+}
+
+.location-subtitle {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--owl-gold);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+/* 本文: 謎やルールの説明（ゴシック体） */
+.description {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  color: var(--fog-white);
+  opacity: 0.95;
+}
+
+/* ===================================
+   UIコンポーネント: 目標情報ボックス
+   =================================== */
+.target-info {
+  background: rgba(28, 30, 58, 0.6);
+  border: 1px solid rgba(255, 217, 102, 0.25);
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+
+  /* 古びた羊皮紙のような質感 */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.target-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--owl-gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.coordinates {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: var(--fog-white);
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}
+
+/* ===================================
+   UIコンポーネント: ボタン
+   =================================== */
+
+/* プライマリボタン: オウル・ゴールドのCTA */
+.check-btn {
+  width: 100%;
+  padding: 1.25rem 2rem;
+
+  /* オウル・ゴールド背景 + ミッドナイト・ブルーテキスト */
+  background: linear-gradient(135deg, #FFD966, #E5C658);
+  color: var(--midnight-blue);
+
+  border: none;
+  border-radius: 12px;
+
+  /* タイポグラフィ: 力強い明朝体 */
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+  /* ホバー時の光るエフェクト準備 */
+  box-shadow: 0 4px 12px rgba(255, 217, 102, 0.3);
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.check-btn:hover {
+  transform: translateY(-2px);
+
+  /* 暗闇で光るネオン効果を強調 */
+  box-shadow:
+    0 6px 20px rgba(255, 217, 102, 0.5),
+    0 0 30px rgba(255, 217, 102, 0.3);
+}
+
+.check-btn:active {
+  transform: translateY(0);
+}
+
+.check-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(255, 217, 102, 0.2);
+}
+
+/* ローディングスピナー */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--midnight-blue);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* セカンダリボタン（ゴーストボタン）: ヒントやルール確認用 */
+.secondary-btn {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 2px solid var(--owl-gold);
+  border-radius: 8px;
+  color: var(--owl-gold);
+
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  text-decoration: none;
+  display: inline-block;
+}
+
+.secondary-btn:hover {
+  background: var(--owl-gold-glow);
+  box-shadow: 0 0 15px rgba(255, 217, 102, 0.3);
+}
+
+/* ===================================
+   結果表示: 正解・不正解のフィードバック
+   =================================== */
+.result {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  animation: slideIn 0.4s ease;
+}
+
+/* 正解: オウル・ゴールドで称賛 */
+.result-success {
+  background: linear-gradient(135deg, #FFD966, #E5C658);
+  border: 2px solid #FFED99;
+  color: var(--midnight-blue);
+
+  box-shadow:
+    0 4px 20px rgba(255, 217, 102, 0.5),
+    0 0 30px rgba(255, 217, 102, 0.3);
+}
+
+/* 警告: 近づいている */
+.result-warning {
+  background: linear-gradient(135deg, var(--warning-orange), #D97706);
+  border: 2px solid #FCD34D;
+  color: var(--fog-white);
+
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* 不正解: シグナル・レッドでアラート */
+.result-error {
+  background: linear-gradient(135deg, var(--signal-red), #DC2626);
+  border: 2px solid #FCA5A5;
+  color: var(--fog-white);
+
+  box-shadow: 0 4px 20px rgba(229, 75, 75, 0.4);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.distance-info {
+  margin-top: 1rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.accuracy-info {
+  margin-top: 0.5rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* ===================================
+   ナビゲーション
+   =================================== */
+.navigation-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-link {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 217, 102, 0.4);
+  border-radius: 8px;
+  color: var(--owl-gold);
+
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.nav-link:hover {
+  background: var(--owl-gold-glow);
+  border-color: var(--owl-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 217, 102, 0.2);
+}
+
+.nav-link.primary {
+  background: var(--owl-gold-glow);
+  border-color: var(--owl-gold);
+}
+
+.location-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.location-link {
+  padding: 0.5rem 1rem;
+  background: rgba(74, 63, 107, 0.4);
+  border: 1px solid rgba(255, 217, 102, 0.3);
+  border-radius: 6px;
+  color: var(--owl-gold);
+
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+.location-link:hover {
+  background: rgba(74, 63, 107, 0.6);
+  border-color: var(--owl-gold);
+  box-shadow: 0 0 8px rgba(255, 217, 102, 0.2);
+}
+
+.location-link.current {
+  background: var(--owl-gold);
+  color: var(--midnight-blue);
+  border-color: var(--owl-gold);
+  font-weight: 700;
+}
+
+/* ===================================
+   レスポンシブデザイン
+   =================================== */
+@media (max-width: 480px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .chapter-badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 1.2rem;
+  }
+
+  .navigation-links {
+    flex-direction: column;
+  }
+
+  .nav-link {
+    min-width: auto;
+  }
+
+  .target-info {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .check-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* ===================================
+   ユーティリティクラス
+   =================================== */
+
+/* 古びた羊皮紙風のテクスチャボックス */
+.parchment-box {
+  background: rgba(28, 30, 58, 0.5);
+  border: 1px solid rgba(255, 217, 102, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+
+  /* 微細な紙の質感 */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence baseFrequency='0.04'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Mr. Owlの引用スタイル */
+.owl-quote {
+  font-family: 'Noto Serif JP', serif;
+  font-style: italic;
+  color: var(--owl-gold);
+  padding: 1rem 1.5rem;
+  border-left: 3px solid var(--owl-gold);
+  margin: 1rem 0;
+  background: rgba(255, 217, 102, 0.05);
+}
+
+/* 秘密のヒントボックス */
+.hint-box {
+  background: rgba(74, 63, 107, 0.5);
+  border: 1px dashed var(--owl-gold);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: var(--fog-white);
+}
+
+/* フクロウのフッター署名 */
+.owl-signature {
+  font-family: 'Noto Serif JP', serif;
+  font-style: italic;
+  color: var(--owl-gold);
+  text-align: right;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}

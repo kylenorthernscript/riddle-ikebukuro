@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success - Tokyo Mystery Challenge</title>
+  <link rel="stylesheet" href="../location-styles.css">
+  <style>
+    .success-card {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 163, 74, 0.05));
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      animation: successGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes successGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.4); }
+    }
+    
+    .congrats-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: bounce 1s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      margin: 2rem auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .next-instruction {
+      background: rgba(147, 51, 234, 0.1);
+      border: 1px solid rgba(147, 51, 234, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    .next-instruction h3 {
+      color: #A78BFA;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .riddle-hint {
+      background: rgba(255, 199, 115, 0.1);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #FFC773;
+    }
+    
+    .back-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .back-buttons .nav-link {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card success-card">
+      <div class="chapter-badge">チャプター 2 - フィールドノード完了！</div>
+
+      <div class="congrats-icon">📂</div>
+
+      <h1 style="color: #22C55E;">調査ファイル：証拠を記録</h1>
+      <div class="location-subtitle">池袋駅西口 — 確認完了</div>
+
+      <div style="background: rgba(57, 198, 244, 0.15); border: 1px solid rgba(57, 198, 244, 0.3); border-radius: 8px; padding: 1rem; margin: 1.5rem 0;">
+        <div style="color: #39C6F4; font-weight: 600; margin-bottom: 0.5rem;">📍 フィールドノード確認済み</div>
+        <div style="font-size: 1rem; color: #FFF; line-height: 1.5;">
+          西口広場での調査が確認されました。<br>
+          監視の生け垣があなたの存在を記録しました—O.W.L.の痕跡は本物です。
+        </div>
+      </div>
+
+      <div style="background: rgba(147, 51, 234, 0.1); border: 1px solid rgba(147, 51, 234, 0.3); border-radius: 8px; padding: 1rem; margin: 1.5rem 0;">
+        <div style="color: #A78BFA; font-weight: 600; margin-bottom: 0.5rem;">🎥 ブリーフィング映像</div>
+        <div style="font-size: 0.95rem; color: #FFF; opacity: 0.9;">
+          機密記録が再生されます。
+        </div>
+      </div>
+
+      <div style="width: 100%; max-width: 480px; aspect-ratio: 16/9; position: relative; margin: 1.5rem auto; overflow: hidden;">
+        <iframe src="https://video.pictory.ai/embed/202509010046582964d8d74ae36994465b79635b27b8fdcac/20250902072148208LDneThODhQdzdU2"
+        title="Checkpoint 01" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="next-instruction">
+        <h3>🗒️ 次のアクション</h3>
+        <p style="margin: 0.5rem 0; line-height: 1.6;">
+          映像を視聴後、冊子を開いて<strong>パズルA</strong>を解いてください。<br>
+          パズルが次の目的地を明らかにします。<br>
+          到着したら、冊子の<strong>フィールドノード2のQRコード</strong>をスキャンして調査を記録してください。
+        </p>
+      </div>
+
+      <div class="riddle-hint">
+        <div style="font-weight: 600; margin-bottom: 0.5rem;">⚠️ フィールド行動規範</div>
+        <div style="line-height: 1.5;">
+          人の流れに沿って歩いてください。<br>
+          生け垣や交番の入口を塞がないでください。<br>
+          目立たないように—O.W.L.の工作員が監視しています。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Confetti effect on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const colors = ['#22C55E', '#39C6F4', '#FFC773', '#A78BFA'];
+      const confettiCount = 30;
+      
+      for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.width = '10px';
+          confetti.style.height = '10px';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.top = '-10px';
+          confetti.style.opacity = '0.8';
+          confetti.style.pointerEvents = 'none';
+          confetti.style.animation = 'fall 3s linear';
+          confetti.style.zIndex = '9999';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 3000);
+        }, i * 50);
+      }
+    });
+    
+    // Add falling animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success - Tokyo Mystery Challenge</title>
+  <link rel="stylesheet" href="../location-styles.css">
+  <style>
+    .success-card {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 163, 74, 0.05));
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      animation: successGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes successGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.4); }
+    }
+    
+    .congrats-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: bounce 1s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      margin: 2rem auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .next-instruction {
+      background: rgba(147, 51, 234, 0.1);
+      border: 1px solid rgba(147, 51, 234, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    .next-instruction h3 {
+      color: #A78BFA;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .riddle-hint {
+      background: rgba(255, 199, 115, 0.1);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #FFC773;
+    }
+    
+    .back-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .back-buttons .nav-link {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card success-card">
+      <div class="chapter-badge">チャプター 2 - フィールドノード L4 完了！</div>
+
+      <div class="congrats-icon">🌳</div>
+
+      <h1 style="color: #22C55E;">調査ファイル：都市のオアシスを発見</h1>
+      <div class="location-subtitle">隠された緑地を確認</div>
+
+      <div style="background: rgba(57, 198, 244, 0.15); border: 1px solid rgba(57, 198, 244, 0.3); border-radius: 8px; padding: 1rem; margin: 1.5rem 0;">
+        <div style="color: #39C6F4; font-weight: 600; margin-bottom: 0.5rem;">📍 場所が明らかに：</div>
+        <div style="font-size: 1.1rem; color: #FFF;">中池袋公園</div>
+        <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.25rem;">Naka-Ikebukuro Park</div>
+      </div>
+
+      <p class="description" style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+        都市の迷路から予想外の聖域が姿を現します。<br>
+        この平和な避難所にはどんな秘密が眠っているのでしょうか？
+      </p>
+
+      <div style="width: 100%; max-width: 480px; aspect-ratio: 16/9; position: relative; margin: 1.5rem auto; overflow: hidden;">
+        <iframe src="https://video.pictory.ai/embed/202509020813248644379c2474924434fb42850a0f58a3157/20250902082721242lZugdqSAWRyDMGW"
+        title="Checkpoint 4" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="next-instruction">
+        <h3>🗝️ 次のチャレンジ</h3>
+        <p style="margin: 0.5rem 0;">
+          調査冊子に戻って解いてください<br>
+          <strong>フィールドノード L4 — 隠された聖域</strong>
+        </p>
+      </div>
+
+      <div class="riddle-hint">
+        📖 次の場所への手がかりが冊子の中で待っています。<br>
+        隠された聖域パズルを解読して旅を続けてください。
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Detective-themed confetti effect on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const colors = ['#22C55E', '#39C6F4', '#FFC773', '#A78BFA'];
+      const symbols = ['🔍', '🗝️', '📍', '🌳'];
+      const confettiCount = 25;
+      
+      for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.fontSize = '20px';
+          confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+          confetti.textContent = Math.random() > 0.7 ? symbols[Math.floor(Math.random() * symbols.length)] : '●';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.top = '-30px';
+          confetti.style.opacity = '0.8';
+          confetti.style.pointerEvents = 'none';
+          confetti.style.animation = 'detectiveFall 4s linear';
+          confetti.style.zIndex = '9999';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 4000);
+        }, i * 60);
+      }
+    });
+    
+    // Add detective-themed falling animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes detectiveFall {
+        to {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

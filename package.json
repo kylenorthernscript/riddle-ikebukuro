@@ -1,0 +1,22 @@
+{
+  "name": "riddle-ikebukuro",
+  "version": "1.0.0",
+  "description": "Location-based riddle game in Ikebukuro area",
+  "private": true,
+  "scripts": {
+    "dev": "http-server -p 8000 -c-1",
+    "start": "http-server -p 8000",
+    "serve": "pnpm dev"
+  },
+  "keywords": [
+    "riddle",
+    "location",
+    "game",
+    "ikebukuro"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

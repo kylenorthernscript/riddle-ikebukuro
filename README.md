@@ -10,27 +10,33 @@
 
 - **GPS位置情報の取得と検証**: Geolocation APIを使用して現在地を取得
 - **距離計算**: Haversine公式による高精度な距離計算
-- **高度チェック**: 展望台などの高層階での位置確認（オプション）
+- **高度チェック**: 高層階での位置確認（オプション）
 - **キャッシュ検出**: iOSのGPSキャッシュ問題を自動検出して再試行
-- **テストモード**: localhost環境で自動的に成功をシミュレート
+- **テストモード**: 開発用テストリンクで位置確認をシミュレート
 - **リトライ機構**: GPS取得失敗時の自動再試行
 - **レスポンシブデザイン**: モバイルファースト設計
+- **多言語対応**: 日本語UI
 
 ## 📁 プロジェクト構造
 
 ```
 riddle-ikebukuro/
-├── index.html                    # トップページ
-├── location01.html - location06.html  # 各チェックポイントのページ
-├── sunshine-observatory.html     # 展望台専用ページ（高度チェック付き）
-├── location-styles.css           # 統一スタイルシート
+├── index.html                          # トップページ
+├── location01.html - location06.html   # 各チェックポイントのページ
+├── location-styles.css                 # 統一スタイルシート
 ├── js/
-│   ├── config.js                 # 設定と定数
-│   ├── geoUtils.js               # 位置情報計算ユーティリティ
-│   ├── ui.js                     # UI表示ロジック
-│   ├── locationChecker.js        # メインビジネスロジック
-│   └── pageInit.js               # ページ初期化
-└── README.md                     # このファイル
+│   ├── config.js                       # 設定と定数
+│   ├── geoUtils.js                     # 位置情報計算ユーティリティ
+│   ├── ui.js                           # UI表示ロジック
+│   ├── locationChecker.js              # メインビジネスロジック
+│   └── pageInit.js                     # ページ初期化
+├── location01/                         # ロケーション1の成功ページ
+├── location02/                         # ロケーション2の成功ページ
+├── location03/                         # ロケーション3の成功ページ
+├── location04/                         # ロケーション4の成功ページ
+├── location05/                         # ロケーション5の成功ページとリドル
+├── location06/                         # ロケーション6の成功ページとエピローグ
+└── README.md                           # このファイル
 ```
 
 ## 🏗️ アーキテクチャ
@@ -114,9 +120,9 @@ open http://localhost:8000
 - ES6 Modulesを使用しているため、必ずHTTPサーバー経由でアクセスしてください
 
 **テストモード**:
-- デフォルトではテストモードは無効です
-- 開発時に位置情報なしでテストする場合は、`js/config.js` の `TEST_MODE_ENABLED` を `true` に変更してください
-- テストモードが有効な場合、localhostで実行すると自動的にすべての位置チェックが成功します
+- 開発用テストリンク（🧪 成功をテスト）を使用して、位置情報なしで成功状態をシミュレートできます
+- テストリンクは各ロケーションページの左下に配置されています
+- プロダクション環境では、これらのテストリンクを削除または無効化することを推奨します
 
 ### プロダクション環境
 
@@ -151,20 +157,11 @@ HTTPS環境にデプロイしてください。Geolocation APIはHTTPSまたはl
 <div id="result" class="result"></div>
 ```
 
-### 高度チェック付きロケーション
+### 開発用テストリンク
 
-展望台などの高層階で位置確認する場合：
+各ロケーションページの左下には、開発用のテストリンク（🧪 成功をテスト）があります。このリンクをクリックすると、実際の位置情報なしで成功状態をシミュレートできます。
 
-```javascript
-initializePage({
-  targetLat: 35.72955,
-  targetLng: 139.71824,
-  locationName: 'サンシャイン60展望台',
-  successRedirectUrl: 'success.html',
-  requireAltitude: true,    // 高度チェックを有効化
-  targetAltitude: 160       // 目標高度（メートル、海抜）
-});
-```
+**注意**: このテストリンクはプロダクション環境では削除または無効化することを推奨します。
 
 ## ⚙️ 設定のカスタマイズ
 
@@ -181,9 +178,8 @@ export const CONFIG = {
   MAX_GPS_RETRY_ATTEMPTS: 3,   // 最大リトライ回数
 
   // 開発設定
-  TEST_MODE_ENABLED: true,     // テストモードの有効化
-  DEBUG_LOGGING: true,         // デバッグログの出力
-  SHOW_TEST_BUTTON: false,     // テストボタンの表示
+  TEST_MODE_ENABLED: false,    // テストモードの有効化（デフォルト: 無効）
+  DEBUG_LOGGING: false,        // デバッグログの出力
 };
 ```
 
@@ -269,4 +265,3 @@ const distance = EARTH_RADIUS_M * c;
 - [Geolocation API - MDN](https://developer.mozilla.org/ja/docs/Web/API/Geolocation_API)
 - [Haversine formula - Wikipedia](https://en.wikipedia.org/wiki/Haversine_formula)
 - [ES6 Modules - MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Modules)
-# riddle-ikebukuro

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riddle Ikebukuro - Tokyo Mystery Challenge</title>
+  <link rel="stylesheet" href="location-styles.css">
+  <style>
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .chapter-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(57, 198, 244, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .chapter-card:hover {
+      background: rgba(57, 198, 244, 0.1);
+      border-color: rgba(57, 198, 244, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(57, 198, 244, 0.2);
+    }
+
+    .chapter-card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #39C6F4;
+    }
+
+    .chapter-card-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .chapter-card-coords {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      font-family: monospace;
+    }
+
+    .intro-text {
+      background: rgba(57, 198, 244, 0.1);
+      border: 1px solid rgba(57, 198, 244, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .intro-text h2 {
+      color: #39C6F4;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .intro-text ul {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .intro-text li {
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="chapter-badge">Tokyo Mystery Challenge</div>
+
+      <div class="location-icon">🗺️</div>
+
+      <h1>Riddle Ikebukuro</h1>
+      <div class="location-subtitle">位置情報ベースの謎解きゲーム</div>
+
+      <div class="intro-text">
+        <h2>📍 ゲームについて</h2>
+        <p class="description">
+          池袋エリアを舞台にした位置情報ベースの謎解きゲームです。<br>
+          各チェックポイントに実際に訪れて、謎を解いていきましょう。
+        </p>
+        <ul>
+          <li>📱 スマートフォンのGPS機能を使用します</li>
+          <li>🚶 実際に各ロケーションへ移動してください</li>
+          <li>📍 25m以内に近づくと次のステージが解放されます</li>
+          <li>🧭 離れている場合は方角と距離が表示されます</li>
+        </ul>
+      </div>
+
+      <h2 style="color: #39C6F4; margin-bottom: 1rem;">チェックポイント一覧</h2>
+
+      <div class="chapter-grid">
+        <a href="location01.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 1</div>
+          <div class="chapter-card-desc">池袋西口</div>
+          <div class="chapter-card-coords">35.73124°N, 139.71006°E</div>
+        </a>
+
+        <a href="location02.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 2</div>
+          <div class="chapter-card-desc">フィールドノード L2</div>
+          <div class="chapter-card-coords">チャレンジして確認</div>
+        </a>
+
+        <a href="location03.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 3</div>
+          <div class="chapter-card-desc">フィールドノード L3</div>
+          <div class="chapter-card-coords">チャレンジして確認</div>
+        </a>
+
+        <a href="location04.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 4</div>
+          <div class="chapter-card-desc">フィールドノード L4</div>
+          <div class="chapter-card-coords">チャレンジして確認</div>
+        </a>
+
+        <a href="location05.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 5</div>
+          <div class="chapter-card-desc">フィールドノード L5</div>
+          <div class="chapter-card-coords">チャレンジして確認</div>
+        </a>
+
+        <a href="location06.html" class="chapter-card">
+          <div class="chapter-card-title">📍 ロケーション 6</div>
+          <div class="chapter-card-desc">フィールドノード L6</div>
+          <div class="chapter-card-coords">チャレンジして確認</div>
+        </a>
+      </div>
+
+      <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); border-radius: 8px;">
+        <div style="font-size: 0.9rem; color: #FFA500; margin-bottom: 0.5rem;">⚠️ 注意事項</div>
+        <div style="font-size: 0.85rem; opacity: 0.8;">
+          • 位置情報の使用を許可してください<br>
+          • GPSの精度向上のため、屋外での使用を推奨します<br>
+          • Wi-Fiをオンにするとより正確な位置情報が得られます<br>
+          • 周囲の安全に注意しながらプレイしてください
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

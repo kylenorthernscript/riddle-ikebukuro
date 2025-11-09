@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>最終ミステリー - Tokyo Mystery Challenge</title>
+  <style>
+    :root {
+      --ink-black: #0B0F14;
+      --charcoal: #12161C;
+      --parchment: #F4F1EC;
+      --amber: #FFC773;
+      --cyan: #39C6F4;
+      --error-red: #EF4444;
+      --success-green: #22C55E;
+      --card-bg: rgba(255, 255, 255, 0.02);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--ink-black);
+      background-image: 
+        radial-gradient(circle at 30% 30%, rgba(255, 199, 115, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(57, 198, 244, 0.06) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      padding: 1rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.2),
+        0 0 80px rgba(255, 199, 115, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      animation: fadeIn 0.4s ease;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .chapter-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--amber), #E59819);
+      color: var(--ink-black);
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(255, 199, 115, 0.3);
+    }
+
+    .riddle-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      color: var(--amber);
+    }
+
+    h1 {
+      font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--amber), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .description {
+      color: rgba(244, 241, 236, 0.9);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .riddle-container {
+      background: rgba(255, 199, 115, 0.05);
+      border: 1px solid rgba(255, 199, 115, 0.2);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .riddle-text {
+      font-size: 1.3rem;
+      line-height: 2;
+      color: var(--parchment);
+      font-weight: 500;
+    }
+
+    .riddle-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 199, 115, 0.3);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      color: var(--parchment);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 120px;
+      margin: 0 0.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .riddle-input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(255, 199, 115, 0.2);
+    }
+
+    .riddle-input.correct {
+      border-color: var(--success-green);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .riddle-input.incorrect {
+      border-color: var(--error-red);
+      background: rgba(239, 68, 68, 0.1);
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--amber), #E59819);
+      border: none;
+      border-radius: 8px;
+      color: var(--ink-black);
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 199, 115, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-message {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .result-success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--success-green);
+    }
+
+    .result-error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--error-red);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      border: 2px solid rgba(11, 15, 20, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--ink-black);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .riddle-text {
+        font-size: 1.1rem;
+      }
+      
+      .riddle-input {
+        min-width: 100px;
+        font-size: 1rem;
+        margin: 0.25rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="chapter-badge">チャプター 2 - 歴史的謎解き</div>
+
+      <div class="riddle-icon">🏛️</div>
+
+      <h1>最終ミステリー</h1>
+
+      <p class="description">
+        この歴史的な謎を解いて、東京ミステリーチャレンジの最終目的地を明らかにしてください。
+      </p>
+
+      <div class="riddle-container">
+        <div class="riddle-text">
+          After <input type="text" id="answer1" class="riddle-input" maxlength="20" placeholder="______">,
+          this place was built on
+          <input type="text" id="answer2" class="riddle-input" maxlength="20" placeholder="______">
+          <input type="text" id="answer3" class="riddle-input" maxlength="20" placeholder="______">.
+        </div>
+      </div>
+
+      <button id="submitBtn" class="submit-btn" onclick="checkAnswers()">
+        🔍 答えを送信
+      </button>
+
+      <div id="result" class="result-message" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script>
+    function normalizeAnswer(answer) {
+      return answer.toLowerCase().trim().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ');
+    }
+
+    function checkAnswers() {
+      const answer1 = document.getElementById('answer1').value;
+      const answer2 = document.getElementById('answer2').value;
+      const answer3 = document.getElementById('answer3').value;
+      const btn = document.getElementById('submitBtn');
+      const result = document.getElementById('result');
+      
+      // Clear previous states
+      document.querySelectorAll('.riddle-input').forEach(input => {
+        input.classList.remove('correct', 'incorrect');
+      });
+      result.style.display = 'none';
+      
+      // Normalize answers
+      const norm1 = normalizeAnswer(answer1);
+      const norm2 = normalizeAnswer(answer2);
+      const norm3 = normalizeAnswer(answer3);
+      
+      // Check answers (case-insensitive)
+      const correct1 = norm1 === 'world war ii' || norm1 === 'world war 2' || norm1 === 'wwii' || norm1 === 'ww2';
+      const correct2 = norm2 === 'sugamo';
+      const correct3 = norm3 === 'prison';
+      
+      // Visual feedback
+      document.getElementById('answer1').classList.add(correct1 ? 'correct' : 'incorrect');
+      document.getElementById('answer2').classList.add(correct2 ? 'correct' : 'incorrect');
+      document.getElementById('answer3').classList.add(correct3 ? 'correct' : 'incorrect');
+      
+      if (correct1 && correct2 && correct3) {
+        // All correct
+        result.innerHTML = '✅ 素晴らしい！謎を解きました！<br><small>最終目的地にリダイレクトしています...</small>';
+        result.className = 'result-message result-success';
+        result.style.display = 'block';
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>処理中...';
+
+        // Redirect to success page after 3 seconds
+        setTimeout(function() {
+          window.location.href = 'success.html';
+        }, 3000);
+
+      } else {
+        // Some incorrect
+        let message = '❌ 正確ではありません。 ';
+        if (!correct1) message += '歴史的時期を確認してください。 ';
+        if (!correct2) message += '刑務所の名前を考えてください。 ';
+        if (!correct3) message += 'どんな種類の施設でしたか？ ';
+        message += '<br><small>ヒント：20世紀の大きな紛争、有名な東京の刑務所、そして建物の種類。</small>';
+
+        result.innerHTML = message;
+        result.className = 'result-message result-error';
+        result.style.display = 'block';
+      }
+    }
+    
+    // Real-time validation on input
+    function validateInput(input, correctAnswers) {
+      const normalized = normalizeAnswer(input.value);
+      const isCorrect = correctAnswers.includes(normalized);
+      
+      input.classList.remove('correct', 'incorrect');
+      if (input.value.trim() !== '') {
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+      }
+    }
+    
+    // Input formatting: uppercase and alphanumeric only
+    function formatInput(input) {
+      // Remove non-alphanumeric characters except spaces, then convert to uppercase
+      let value = input.value.replace(/[^a-zA-Z0-9\s]/g, '').toUpperCase();
+      input.value = value;
+    }
+    
+    // Add input formatting and real-time validation
+    document.getElementById('answer1').addEventListener('input', function() {
+      formatInput(this);
+      validateInput(this, ['world war ii', 'world war 2', 'wwii', 'ww2']);
+    });
+    
+    document.getElementById('answer2').addEventListener('input', function() {
+      formatInput(this);
+      validateInput(this, ['sugamo']);
+    });
+    
+    document.getElementById('answer3').addEventListener('input', function() {
+      formatInput(this);
+      validateInput(this, ['prison']);
+    });
+
+    // Allow Enter key to submit
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        checkAnswers();
+      }
+    });
+    
+  </script>
+</body>
+</html>
